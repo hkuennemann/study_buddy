@@ -36,6 +36,7 @@ from langchain.text_splitter import TokenTextSplitter
 from langchain.docstore.document import Document
 import os
 from dotenv import load_dotenv
+import logging
 
 def load_and_split(
     file_path: str,
@@ -44,6 +45,7 @@ def load_and_split(
     chunk_overlap_q: int = 200,
     chunk_size_a: int = 1000,
     chunk_overlap_a: int = 100,
+    suppress_warnings: bool = False
 ) -> Tuple[List[Document], List[Document]]:
     """
     Load and split data from a PDF file into chunks for question and answer generation.
@@ -60,6 +62,10 @@ def load_and_split(
         Tuple[List[Document], List[Document]]: A tuple containing the chunks for question 
             and answer generation
     """
+
+    # Suppress warnings if verbose is False
+    if suppress_warnings:
+        logging.getLogger("pypdf").setLevel(logging.ERROR)
 
     # ------------------------------------------------------------
     # Load data from PDF
@@ -109,10 +115,13 @@ def load_and_split(
 if __name__ == "__main__":
     # Simple CLI entry for quick checks
     # Load .env file
-    load_dotenv()  # by default, it looks for a .env in the current directory
+    load_dotenv() 
 
     # Get FILE_PATH
     file_path = os.getenv("FILE_PATH")
+
+    if not file_path:
+        raise ValueError("FILE_PATH environment variable not set in .env")
 
     dq, da = load_and_split(file_path)
     print(f"Question chunks: {len(dq)}, Answer chunks: {len(da)}")

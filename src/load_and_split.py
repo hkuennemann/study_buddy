@@ -30,13 +30,13 @@ Notes:
 - For large PDFs, you may want to cache the resulting chunks to speed up iteration.
 """
 
+import os
+import logging
 from typing import List, Tuple
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import TokenTextSplitter
 from langchain.docstore.document import Document
-import os
 from dotenv import load_dotenv
-import logging
 
 def load_and_split(
     file_path: str,

@@ -1,6 +1,10 @@
-from langchain.prompts import PromptTemplate
+"""
+Prompt templates.
+"""
 
-prompt_template_questions = """
+from langchain_core.prompts import PromptTemplate
+
+PROMPT_TEMPLATE_QUESTIONS = """
 You are an expert at creating practice questions based on study material.
 Your goal is to prepare a student for their exam. 
 You do this by asking questions about the text below:
@@ -15,11 +19,11 @@ Make sure not to lose any important information.
 QUESTIONS:
 """
 PROMPT_QUESTIONS = PromptTemplate(
-    template=prompt_template_questions, 
+    template=PROMPT_TEMPLATE_QUESTIONS,
     input_variables=["text"],
     )
 
-refine_template_questions = ("""
+REFINE_TEMPLATE_QUESTIONS = ("""
 You are an expert at creating practice questions based on study material.
 Your goal is to help a student prepare for an exam.
 We have received some practice questions to a certain extent: {existing_answer}.
@@ -36,5 +40,5 @@ QUESTIONS:
 )
 REFINE_PROMPT_QUESTIONS = PromptTemplate(
     input_variables=["existing_answer", "text"],
-    template=refine_template_questions,
+    template=REFINE_TEMPLATE_QUESTIONS,
 )

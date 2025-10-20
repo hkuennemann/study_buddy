@@ -33,9 +33,9 @@ Notes:
 import os
 import logging
 from typing import List, Tuple
-from langchain.document_loaders import PyPDFLoader
-from langchain.text_splitter import TokenTextSplitter
-from langchain.docstore.document import Document
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import TokenTextSplitter
+from langchain_core.documents import Document
 from dotenv import load_dotenv
 
 def load_and_split(
@@ -118,10 +118,10 @@ if __name__ == "__main__":
     load_dotenv() 
 
     # Get FILE_PATH
-    file_path = os.getenv("FILE_PATH")
+    env_file_path = os.getenv("FILE_PATH")
 
-    if not file_path:
+    if not env_file_path:
         raise ValueError("FILE_PATH environment variable not set in .env")
 
-    dq, da = load_and_split(file_path)
+    dq, da = load_and_split(env_file_path)
     print(f"Question chunks: {len(dq)}, Answer chunks: {len(da)}")

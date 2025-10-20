@@ -14,25 +14,53 @@ Typical usage:
 
 Notes:
 - `ChatOpenAI` reads the `OPENAI_API_KEY` from your environment (.env supported).
+- `ChatGoogleGenerativeAI` reads the `GEMINI_API_KEY` from your environment (.env supported).
 - The refine chain uses distinct prompts for initial and refine steps.
 """
 
 from typing import List
-from langchain.chains.summarize import load_summarize_chain
-from langchain.docstore.document import Document
+import os
+from dotenv import load_dotenv
+from langchain.chains.summarize.chain import load_summarize_chain
+from langchain_core.documents import Document
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from src.prompts import PROMPT_QUESTIONS, REFINE_PROMPT_QUESTIONS
+
+# Ensure .env is loaded so API keys are available to providers
+load_dotenv()
 
 # Hyperparameters
 TEMPERATURE = 0.4
-MODEL = "gpt-3.5-turbo-16k"
+OPENAI_MODEL = "gpt-3.5-turbo-16k"
+GEMINI_MODEL = "gemini-2.0-flash"  # e.g., "gemini-1.5-pro" or "gemini-1.5-flash"
 
 # -----------------------------------------------------------------------------
 #   Summarization chain for question generation
 # -----------------------------------------------------------------------------
-def get_question_chain(model: str = MODEL, temperature: float = TEMPERATURE):
+def get_question_chain(
+    provider: str = "openai", 
+    model: str = None, 
+    temperature: float = TEMPERATURE
+):
     """Create and return a refine-based summarize chain for question generation."""
-    llm = ChatOpenAI(model=model, temperature=temperature)
+    if provider == "openai":
+        model = model or OPENAI_MODEL
+        llm = ChatOpenAI(
+            model=model,
+            temperature=temperature,
+            api_key=os.getenv("OPENAI_API_KEY"),
+        )
+    elif provider == "gemini":
+        model = model or GEMINI_MODEL
+        llm = ChatGoogleGenerativeAI(
+            model=model,
+            temperature=temperature,
+            google_api_key=os.getenv("GEMINI_API_KEY"),
+        )
+    else:
+        raise ValueError(f"Unsupported provider: {provider}. Use 'openai' or 'gemini'.")
+
     return load_summarize_chain(
         llm=llm,
         chain_type="refine",
@@ -43,9 +71,10 @@ def get_question_chain(model: str = MODEL, temperature: float = TEMPERATURE):
 
 def generate_questions(
     docs: List[Document],
-    model: str = MODEL,
+    provider: str = "openai",
+    model: str = None,
     temperature: float = TEMPERATURE,
 ) -> str:
     """Run the question-generation chain on `docs` and return the questions text."""
-    chain = get_question_chain(model=model, temperature=temperature)
+    chain = get_question_chain(provider=provider, model=model, temperature=temperature)
     return chain.run(docs)

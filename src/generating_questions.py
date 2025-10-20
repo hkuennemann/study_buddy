@@ -33,7 +33,7 @@ load_dotenv()
 # Hyperparameters
 TEMPERATURE = 0.4
 OPENAI_MODEL = "gpt-3.5-turbo-16k"
-GEMINI_MODEL = "gemini-2.0-flash"  # e.g., "gemini-1.5-pro" or "gemini-1.5-flash"
+GEMINI_MODEL = "gemini-2.0-flash"
 
 # -----------------------------------------------------------------------------
 #   Summarization chain for question generation
@@ -49,14 +49,14 @@ def get_question_chain(
         llm = ChatOpenAI(
             model=model,
             temperature=temperature,
-            api_key=os.getenv("OPENAI_API_KEY"),
+            api_key=os.getenv("OPENAI_API_KEY")
         )
     elif provider == "gemini":
         model = model or GEMINI_MODEL
         llm = ChatGoogleGenerativeAI(
             model=model,
             temperature=temperature,
-            google_api_key=os.getenv("GEMINI_API_KEY"),
+            google_api_key=os.getenv("GEMINI_API_KEY")
         )
     else:
         raise ValueError(f"Unsupported provider: {provider}. Use 'openai' or 'gemini'.")

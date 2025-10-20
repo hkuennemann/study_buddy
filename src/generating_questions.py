@@ -39,8 +39,8 @@ GEMINI_MODEL = "gemini-2.0-flash"  # e.g., "gemini-1.5-pro" or "gemini-1.5-flash
 #   Summarization chain for question generation
 # -----------------------------------------------------------------------------
 def get_question_chain(
-    provider: str = "openai", 
-    model: str = None, 
+    provider: str = "openai",
+    model: str = None,
     temperature: float = TEMPERATURE
 ):
     """Create and return a refine-based summarize chain for question generation."""

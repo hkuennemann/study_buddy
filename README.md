@@ -64,54 +64,15 @@ GEMINI_API_KEY=your_gemini_api_key_here
 FILE_PATH=study_material/your_document.pdf
 ```
 
-## 🚀 Quick Start
-
-### Using the Jupyter Notebook
-1. Start Jupyter: `jupyter notebook`
-2. Open `showcase.ipynb`
-3. Run the cells to see the complete workflow
-
-### Using Python Scripts
-```python
-from src.load_and_split import load_and_split
-from src.generating_questions import generate_questions
-from src.generating_answers import create_vector_store, retrieve_answers
-
-# Load and split your document
-docs_q, docs_a = load_and_split("study_material/your_document.pdf")
-
-# Generate questions
-questions = generate_questions(docs_q, provider="gemini")
-
-# Create vector store and generate answers
-vector_store = create_vector_store(docs_a, "openai")
-retrieve_answers(questions, vector_store, provider="gemini")
-```
-
 ## 📚 Usage Examples
 
-### Question Generation
-```python
-from src.generating_questions import generate_questions
-
-# Generate questions with different providers
-questions_openai = generate_questions(docs, provider="openai", temperature=0.3)
-questions_gemini = generate_questions(docs, provider="gemini", temperature=0.4)
+### Running the Application
+```bash
+# Run the main application
+python main.py
 ```
 
-### Answer Generation
-```python
-from src.generating_answers import create_vector_store, get_answer_chain
-
-# Create vector store
-vector_store = create_vector_store(docs, "openai")
-
-# Get answer chain
-chain = get_answer_chain(vector_store, provider="gemini")
-
-# Ask questions
-answer = chain.run("What is machine learning?")
-```
+The main.py file provides a complete study buddy experience that automatically processes your study materials and generates practice questions and answers.
 
 ## ⚙️ Configuration
 
@@ -133,16 +94,6 @@ Modify `src/prompts.py` to customize question and answer generation:
 CUSTOM_QUESTION_PROMPT = """
 Your custom prompt here...
 """
-```
-
-### Batch Processing
-```python
-# Process multiple documents
-documents = ["doc1.pdf", "doc2.pdf", "doc3.pdf"]
-for doc in documents:
-    docs_q, docs_a = load_and_split(doc)
-    questions = generate_questions(docs_q)
-    # Process questions...
 ```
 
 ## 📊 Output

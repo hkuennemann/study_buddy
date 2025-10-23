@@ -25,10 +25,15 @@ from langchain.chains.summarize.chain import load_summarize_chain
 from langchain_core.documents import Document
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.tracers import LangChainTracer
+from langsmith import Client
 from src.prompts import PROMPT_QUESTIONS, REFINE_PROMPT_QUESTIONS
 
 # Ensure .env is loaded so API keys are available to providers
 load_dotenv()
+
+# Initialize LangSmith client for tracking
+langsmith_client = Client()
 
 # Hyperparameters
 TEMPERATURE = 0.4
@@ -43,7 +48,40 @@ def get_question_chain(
     model: str = None,
     temperature: float = TEMPERATURE
 ):
-    """Create and return a refine-based summarize chain for question generation."""
+    """
+    Create and return a refine-based summarize chain for question generation.
+    
+    This function initializes a Large Language Model and creates a refine-based
+    summarization chain specifically configured for generating study questions
+    from documents. The chain uses distinct prompts for initial question generation
+    and refinement steps.
+    
+    Args:
+        provider (str, optional): The LLM provider to use. Either "openai" or "gemini".
+            Defaults to "openai".
+        model (str, optional): Specific model to use. If None, uses the default model
+            for the chosen provider. Defaults to None.
+        temperature (float, optional): Controls randomness in the model's responses.
+            Higher values make responses more creative. Defaults to TEMPERATURE (0.4).
+    
+    Returns:
+        SummarizeChain: A configured refine-based summarization chain ready for
+            question generation from documents.
+        
+    Raises:
+        ValueError: If the provider is not "openai" or "gemini".
+        
+    Note:
+        - Requires appropriate API keys to be set in environment variables:
+          OPENAI_API_KEY for OpenAI provider, GEMINI_API_KEY for Gemini provider.
+        - The chain uses PROMPT_QUESTIONS for initial generation and
+          REFINE_PROMPT_QUESTIONS for refinement steps.
+        - Verbose mode is enabled by default for debugging purposes.
+        
+    Example:
+        >>> chain = get_question_chain(provider="gemini", temperature=0.3)
+        >>> questions = chain.run(documents)
+    """
     if provider == "openai":
         model = model or OPENAI_MODEL
         llm = ChatOpenAI(
@@ -75,6 +113,51 @@ def generate_questions(
     model: str = None,
     temperature: float = TEMPERATURE,
 ) -> str:
-    """Run the question-generation chain on `docs` and return the questions text."""
+    """
+    Generate study questions from a list of documents using a refine-based chain.
+    
+    This function processes a list of documents and generates comprehensive study
+    questions using a refine-based summarization chain. The questions are designed
+    to help students prepare for exams by covering the key concepts and information
+    present in the source documents.
+    
+    Args:
+        docs (List[Document]): A list of LangChain Document objects containing
+            the study material to generate questions from.
+        provider (str, optional): The LLM provider to use. Either "openai" or "gemini".
+            Defaults to "openai".
+        model (str, optional): Specific model to use. If None, uses the default model
+            for the chosen provider. Defaults to None.
+        temperature (float, optional): Controls randomness in the model's responses.
+            Higher values make responses more creative. Defaults to TEMPERATURE (0.4).
+    
+    Returns:
+        str: A string containing the generated study questions, typically formatted
+            as numbered questions (e.g., "1. What is...?\\n2. How does...?").
+        
+    Raises:
+        ValueError: If the provider is not "openai" or "gemini".
+        
+    Note:
+        - The function uses a refine-based approach, which is particularly effective
+          for processing large documents by generating initial questions and then
+          refining them with additional context.
+        - The generated questions are designed to be comprehensive and exam-focused.
+        - Processing time depends on the number and size of input documents.
+        - All operations are tracked in LangSmith for monitoring and debugging.
+        
+    Example:
+        >>> from src.load_and_split import load_and_split
+        >>> docs_q, _ = load_and_split("study_material/Advanced Data Analytics.pdf")
+        >>> questions = generate_questions(docs_q, provider="gemini")
+        >>> print(questions)
+        1. What is machine learning?
+        2. How does supervised learning work?
+        ...
+    """
     chain = get_question_chain(provider=provider, model=model, temperature=temperature)
-    return chain.run(docs)
+    
+    # Run the chain (tracing is automatically enabled via environment variables)
+    result = chain.run(docs)
+    
+    return result

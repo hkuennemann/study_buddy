@@ -30,13 +30,11 @@ Notes:
 - For large PDFs, you may want to cache the resulting chunks to speed up iteration.
 """
 
-import os
 import logging
 from typing import List, Tuple
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import TokenTextSplitter
 from langchain_core.documents import Document
-from dotenv import load_dotenv
 
 def load_and_split(
     file_path: str,
@@ -75,7 +73,7 @@ def load_and_split(
     loader = PyPDFLoader(file_path)
     data = loader.load()
 
-    # --- Note: The data variable holds the extracted study material, 
+    # --- Note: The data variable holds the extracted study material,
     # --- neatly organized and ready for further processing
 
     # ------------------------------------------------------------
@@ -87,8 +85,8 @@ def load_and_split(
 
     # Initialize Text Splitter for question generation
     q_splitter = TokenTextSplitter(
-        model_name=model_name, 
-        chunk_size=chunk_size_q, 
+        model_name=model_name,
+        chunk_size=chunk_size_q,
         chunk_overlap=chunk_overlap_q
         )
 
@@ -104,24 +102,10 @@ def load_and_split(
 
     # Initialize Text Splitter for answer generation
     a_splitter = TokenTextSplitter(
-        model_name=model_name, 
-        chunk_size=chunk_size_a, 
+        model_name=model_name,
+        chunk_size=chunk_size_a,
         chunk_overlap=chunk_overlap_a)
 
     # Split documents into chunks for answer generation
     docs_a = a_splitter.split_documents(docs_q)
     return docs_q, docs_a
-
-if __name__ == "__main__":
-    # Simple CLI entry for quick checks
-    # Load .env file
-    load_dotenv() 
-
-    # Get FILE_PATH
-    env_file_path = os.getenv("FILE_PATH")
-
-    if not env_file_path:
-        raise ValueError("FILE_PATH environment variable not set in .env")
-
-    dq, da = load_and_split(env_file_path)
-    print(f"Question chunks: {len(dq)}, Answer chunks: {len(da)}")

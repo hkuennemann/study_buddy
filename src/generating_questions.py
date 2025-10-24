@@ -102,7 +102,7 @@ def get_question_chain(
     return load_summarize_chain(
         llm=llm,
         chain_type="refine",
-        verbose=True,
+        verbose=False,
         question_prompt=PROMPT_QUESTIONS,
         refine_prompt=REFINE_PROMPT_QUESTIONS,
     )

@@ -222,14 +222,11 @@ def retrieve_answers(
 
     # Answer each question and save to a file
     with open("outputs/answers.txt", "w", encoding="utf-8") as f:
-        for question in question_list:
-            print("Question: ", question)
-            
+        for i,question in enumerate(question_list):
+            print(f"Answering question {i+1} of {len(question_list)}", end="\r")
             # Run the chain (tracing is automatically enabled via environment variables)
             answer = answer_chain.run(question)
             
-            print("Answer: ", answer)
-            print("--------------------------------------------------\\n\\n")
             # Save answer to file
             f.write("Question: " + question + "\\n")
             f.write("Answer: " + answer + "\\n")

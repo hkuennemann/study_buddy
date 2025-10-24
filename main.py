@@ -3,6 +3,7 @@
 # ------------------------------------------------------------
 
 import os
+import re
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
@@ -34,6 +35,7 @@ def setup_environment():
 
 def main():
     """Main execution function for Study Buddy."""
+
     print("🧠 Study Buddy - Starting...")
     
     # Setup environment
@@ -45,16 +47,15 @@ def main():
         print("Please check your FILE_PATH in .env file")
         sys.exit(1)
     
-    print(f"📄 Processing file: {file_path}")
+    print(f"(1) 📄 Processing file: {os.path.basename(file_path)}")
     
     # ------------------------------------------------------------
     #   Load and split documents
     # ------------------------------------------------------------
     
-    print("📚 Loading and splitting documents...")
     try:
         docs_q, docs_a = load_and_split(file_path, suppress_warnings=True)
-        print(f"✅ Loaded {len(docs_q)} question chunks and {len(docs_a)} answer chunks")
+        print(f"(2) 📚 Loaded {len(docs_q)} question chunks and {len(docs_a)} answer chunks")
     except Exception as e:
         print(f"❌ Error loading documents: {e}")
         sys.exit(1)
@@ -63,12 +64,12 @@ def main():
     #   Generate questions
     # ------------------------------------------------------------
     
-    print("❓ Generating questions...")
     try:
         questions_text = generate_questions(docs_q, provider="gemini")
-        print("✅ Questions generated successfully")
-        question_count = len(questions_text.split('\n'))
-        print(f"📝 Generated {question_count} questions")
+        # Count questions
+        question_lines = [line.strip() for line in questions_text.split('\n') if re.match(r'^\d+\.', line.strip())]
+        question_count = len(question_lines)
+        print(f"(3) 📝 Generated {question_count} questions")
     except Exception as e:
         print(f"❌ Error generating questions: {e}")
         sys.exit(1)
@@ -77,29 +78,25 @@ def main():
     #   Generate answers
     # ------------------------------------------------------------
     
-    print("🔍 Creating vector store...")
     try:
         vector_store = create_vector_store(docs_a, "gemini")
-        print("✅ Vector store created successfully")
+        print("(4) 🔍 Vector store created successfully")
     except Exception as e:
         print(f"❌ Error creating vector store: {e}")
         sys.exit(1)
     
-    print("💡 Generating answers...")
     try:
         retrieve_answers(
             questions=questions_text,
             vector_store=vector_store, 
             provider="gemini"
         )
-        print("✅ Answers generated successfully")
-        print("📁 Results saved to outputs/answers.txt")
+        print("(5) 📁 Answers generated successfully and results saved to outputs/answers.txt")
     except Exception as e:
         print(f"❌ Error generating answers: {e}")
         sys.exit(1)
     
-    print("🎉 Study Buddy completed successfully!")
-    print("📊 Check your LangSmith dashboard to view detailed traces")
+    print("✅ Done!")
 
 if __name__ == "__main__":
     main()

@@ -39,8 +39,8 @@ from langchain_core.documents import Document
 def load_and_split(
     file_path: str,
     model_name: str = "gpt-3.5-turbo-16k",
-    chunk_size_q: int = 10000,
-    chunk_overlap_q: int = 200,
+    chunk_size_q: int = 5000,
+    chunk_overlap_q: int = 500,
     chunk_size_a: int = 1000,
     chunk_overlap_a: int = 100,
     suppress_warnings: bool = False

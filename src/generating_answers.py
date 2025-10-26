@@ -172,7 +172,8 @@ def retrieve_answers(
         vector_store: Chroma,
         provider: str = "openai",
         model: str = None,
-        temperature: float = TEMPERATURE
+        temperature: float = TEMPERATURE,
+        limit: int = None
         ):
     """
     Generate answers for a list of questions and save them to a file.
@@ -193,6 +194,8 @@ def retrieve_answers(
             for the chosen provider. Defaults to None.
         temperature (float, optional): Controls randomness in the model's responses.
             Lower values make responses more deterministic. Defaults to TEMPERATURE (0.1).
+        limit (int, optional): Maximum number of questions to answer. If None, answers all questions.
+            Defaults to None.
     
     Returns:
         None: This function doesn't return a value but prints progress and saves
@@ -203,10 +206,11 @@ def retrieve_answers(
           properly numbered questions.
         - Results are appended to "answers.txt" in the current working directory.
         - Progress is printed to console for each question being processed.
+        - If limit is specified, only the first N questions will be answered.
         
     Example:
         >>> questions = "1. What is machine learning?\\n2. How does it work?"
-        >>> retrieve_answers(questions, vector_store, provider="gemini")
+        >>> retrieve_answers(questions, vector_store, provider="gemini", limit=1)
         Question: 1. What is machine learning?
         Answer: Machine learning is a subset of artificial intelligence...
         --------------------------------------------------
@@ -216,18 +220,27 @@ def retrieve_answers(
 
     # Keep only lines that start with a number and a dot
     question_list = [line.strip() for line in question_list if re.match(r"^\d+\.", line.strip())]
+    
+    # Apply limit if specified
+    if limit is not None:
+        question_list = question_list[:limit]
+        print(f"\t📝 Limited to first {limit} questions")
 
     # Get answer chain
     answer_chain = get_answer_chain(vector_store, provider, model, temperature)
 
     # Answer each question and save to a file
     with open("outputs/answers.txt", "w", encoding="utf-8") as f:
-        for i,question in enumerate(question_list):
+        for i, question in enumerate(question_list):
             print(f"Answering question {i+1} of {len(question_list)}", end="\r")
-            # Run the chain (tracing is automatically enabled via environment variables)
+
+            # Clean question
+            clean_question = re.sub(r'^\d+\.\s*', '', question)
+            
+            # Run the chain
             answer = answer_chain.run(question)
             
             # Save answer to file
-            f.write("Question: " + question + "\\n")
-            f.write("Answer: " + answer + "\\n")
-            f.write("--------------------------------------------------\\n\\n")
+            f.write(f"Question {i+1}: " + clean_question + "\n")
+            f.write("Answer: " + answer + "\n")
+            f.write("--------------------------------------------------\n\n")

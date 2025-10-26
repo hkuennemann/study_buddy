@@ -36,7 +36,7 @@ load_dotenv()
 langsmith_client = Client()
 
 # Hyperparameters
-TEMPERATURE = 0.4
+TEMPERATURE = 0.2
 OPENAI_MODEL = "gpt-3.5-turbo-16k"
 GEMINI_MODEL = "gemini-2.0-flash"
 
@@ -157,7 +157,7 @@ def generate_questions(
     """
     chain = get_question_chain(provider=provider, model=model, temperature=temperature)
     
-    # Run the chain (tracing is automatically enabled via environment variables)
+    # Run the chain
     result = chain.run(docs)
     
     return result

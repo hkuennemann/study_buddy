@@ -62,6 +62,9 @@ GEMINI_API_KEY=your_gemini_api_key_here
 
 # File path for processing
 FILE_PATH=study_material/your_document.pdf
+
+# Optional: Limit number of questions to answer (e.g., 20 for first 20 questions)
+# QUESTION_LIMIT=20
 ```
 
 ## 📚 Usage Examples

@@ -1,257 +1,108 @@
-Question: 1.  What are the four key actions needed to extract knowledge and value from data, according to the introduction?\nAnswer: According to the introduction, to extract the knowledge and value from data, data needs to be:
-- Collected
-- Stored
-- Managed
-- Analyzed
-\n--------------------------------------------------\n\nQuestion: 2.  Describe the four characteristics (the "four V's") of Big Data and explain why each is important.\nAnswer: The four V's of Big Data are:
+Question 1: What are the four key steps involved in extracting knowledge and value from data, as outlined in the introduction to Big Data?
+Answer: According to the text, the four key steps to extract knowledge and value from data are:
 
-1.  **Volume:** This refers to the sheer amount of data being processed. The large volume of data is important because it allows for the discovery of more complex patterns and insights that might not be apparent in smaller datasets.
+1.  Collected
+2.  Stored
+3.  Managed
+4.  Analyzed
+--------------------------------------------------
 
-2.  **Velocity:** This refers to the speed at which data is generated and needs to be processed. The high velocity of data requires systems that can capture, process, and analyze data in real-time or near real-time, enabling timely decision-making and responses.
+Question 2: Define "Analytics" in the context of data analysis. What four characteristics should patterns and models discovered through analytics possess?
+Answer: In the context of data analysis, analytics is defined as the science that analyzes crude data to extract useful knowledge from it.
 
-3.  **Variety:** This refers to the different types and formats of data from various sources. The variety of data is important because it provides a more comprehensive view of the problem being addressed, but it also requires sophisticated techniques to integrate and analyze data from different sources.
-\n--------------------------------------------------\n\nQuestion: 3.  Explain the difference between Data Mining, Machine Learning, and Data Science, as defined in the text.\nAnswer: Here's how the document differentiates Data Mining, Machine Learning, and Data Science:
+The four characteristics that patterns and models discovered through analytics should possess are:
 
-*   **Data Mining:** Focuses on discovering *unknown properties* in data.
-*   **Machine Learning:** Studies computer algorithms that *improve automatically through experience*.
-*   **Data Science:** Involves creating models to *extract patterns from complex data* and using these models to solve real-world problems.
-\n--------------------------------------------------\n\nQuestion: 4.  Define "model," "method," and "algorithm" in the context of data analysis. Give an example of each.\nAnswer: Here are the definitions of "model", "method", and "algorithm" in the context of data analysis, along with examples:
+1.  **Valid:** Hold on new data with some certainty.
+2.  **Useful:** Should be possible to act on the item.
+3.  **Unexpected:** Non-obvious to the system.
+4.  **Understandable:** Humans should be able to interpret the pattern.
+--------------------------------------------------
+
+Question 3: Differentiate between Machine Learning and Data Mining.
+Answer: Data Mining focuses on discovering unknown properties in the data, while Machine Learning is the study of computer algorithms that improve automatically through experience.
+
+--------------------------------------------------
+
+Question 4: Explain the "Three V's" of Big Data and provide a brief description of each.
+Answer: The "Three V's" of Big Data are:
+
+*   **Volume:** The amount of data being processed.
+*   **Velocity:** The ability to deal with data arriving very fast.
+*   **Variety:** Data from different sources and with different formats.
+--------------------------------------------------
+
+Question 5: Define "Model," "Method," and "Algorithm" in the context of data science.
+Answer: Here are the definitions of "Model," "Method," and "Algorithm" in the context of data science, according to the provided text:
 
 *   **Model:** A generalization obtained from data that can be used afterward to generate predictions for new given instances.
-    *   **Example:** A linear regression model built to predict house prices based on square footage and location.
-
-*   **Method:** A systematic procedure that allows one to achieve an intended goal.
-    *   **Example:** The holdout method, which is a method for validation and selection in machine learning.
-
+*   **Method:** A systematic procedure that allows achieving an intended goal.
 *   **Algorithm:** A step-by-step set of instructions easily understandable by humans.
-    *   **Example:** The K-means clustering algorithm, which is used to group data points into clusters based on their distance from cluster centers.
-\n--------------------------------------------------\n\nQuestion: 5.  What is the difference between a hyper-parameter and a model parameter? Give an example of each in the context of a machine learning algorithm.\nAnswer: Here's the breakdown of the difference between hyperparameters and model parameters, along with examples:
+--------------------------------------------------
 
-*   **Hyperparameter:**
-    *   **Definition:** A value that is set by the user *before* the training process begins. They control aspects of the model's learning process.
-    *   **Example:** The number of clusters in k-means clustering. The user decides how many clusters the algorithm should attempt to find in the data.
+Question 6: What is the difference between a hyper-parameter and a model parameter? Give an example of each.
+Answer: I am sorry, but this document does not contain the answer to your question about the difference between a hyper-parameter and a model parameter, nor does it provide examples of each.
 
-*   **Model Parameter:**
-    *   **Definition:** A value that is learned by the modelling/ learning algorithm *during* its internal procedure.
-    *   **Example:** The slope of a linear regression line. The algorithm adjusts the slope to find the line that best fits the training data.\n--------------------------------------------------\n\nQuestion: 6.  Explain the difference between a one-to-one (map) transformation and a many-to-one (reduce) transformation in the context of Pandas DataFrames. Why is this distinction important for parallel computing?\nAnswer: Here's an explanation of the difference between one-to-one (map) and many-to-one (reduce) transformations in Pandas, and why this matters for parallel computing:
+--------------------------------------------------
 
-**One-to-One (Map) Transformation:**
+Question 7: In the context of Pandas, what is a one-to-one (map) transformation and a many-to-one (reduce) transformation? Why is the transformation from one DataFrame to another useful?
+Answer: Here's an explanation of one-to-one (map) and many-to-one (reduce) transformations in Pandas, along with the usefulness of DataFrame transformations:
 
-*   **Definition:** A one-to-one transformation applies a function to each row of a DataFrame independently, producing a corresponding output row for each input row.  Each row is transformed individually.
-*   **Independence:** The key characteristic is that each row's transformation is independent of other rows. The processing of one row doesn't require information from any other row.
-*   **Example:**  Calculating a new column based on a formula applied to an existing column (e.g., converting Celsius to Fahrenheit for each temperature reading in a DataFrame).  Filtering rows based on a condition.
-*   **Code Example:**
-    ```python
-    df['new_column'] = df['existing_column'].apply(lambda x: x * 2)  # Example: Multiply each value by 2
-    ```
+**One-to-one (map) transformation:**
 
-**Many-to-One (Reduce) Transformation:**
+*   This transformation transforms each row of the DataFrame into another row of a DataFrame.
+*   Each transformation can be performed independently.
 
-*   **Definition:** A many-to-one transformation combines multiple rows of a DataFrame into a single output row. It aggregates or summarizes data from several rows.
-*   **Dependence:** This type of transformation *requires* information from multiple rows to produce the result.
-*   **Example:** Calculating the sum, mean, minimum, or maximum of a column. Grouping data by a column and then calculating aggregate statistics for each group.
-*   **Code Example:**
-    ```python
-    total = df['column'].sum()  # Sum of all values in the 'column'
-    grouped_data = df.groupby('grouping_column')['value_column'].mean()  # Mean of 'value_column' for each group
-    ```
+**Many-to-one (reduce) transformation:**
 
-**Importance for Parallel Computing:**
+*   This transformation transforms multiple rows of the DataFrame into a single row of the new DataFrame.
+*   This transformation needs to get the data for all rows to be reduced.
 
-The distinction between map and reduce transformations is crucial for parallel computing because it determines how easily a data analysis task can be divided and executed across multiple processors or machines.
+**Usefulness of DataFrame transformations:**
 
-1.  **Map Transformations: Embarrassingly Parallel**
-    *   Map transformations are ideally suited for parallel processing. Because each row is processed independently, you can divide the DataFrame into chunks and assign each chunk to a different processor or machine. Each processor can then apply the transformation to its chunk without needing to communicate or synchronize with the others. This is often referred to as "embarrassingly parallel" because it's so straightforward to parallelize.
+*   The transformation from one DataFrame to another is useful because we can use parallel computing, resulting in a shorter running time.
+--------------------------------------------------
 
-2.  **Reduce Transformations: More Complex Parallelism**
-    *   Reduce transformations are more challenging to parallelize. Because they require combining data from multiple rows, you can't simply divide the DataFrame and process each chunk independently. You need a mechanism to:
-        *   Divide the data into chunks.
-        *   Perform some initial processing on each chunk (a "local" reduction).
-        *   Combine the results from each chunk into a final, global result.
-    *   Frameworks like MapReduce and Spark are designed to handle this type of parallel reduction efficiently. They automatically manage the partitioning of data, the distribution of tasks, and the aggregation of results. Wide dependencies, like groupBy, generic join, select aggregate, are computationally expensive.
-
-In summary, recognizing whether a transformation is map or reduce helps you understand the potential for parallelization and choose the appropriate tools and techniques to speed up your data analysis workflows. Map transformations offer straightforward parallelism, while reduce transformations require more sophisticated parallel processing strategies.
-\n--------------------------------------------------\n\nQuestion: 7.  Write the Pandas code to load a CSV file named "data.csv" into a DataFrame.\nAnswer: ```python
-import pandas as pd
-df = pd.read_csv("data.csv")
-```
-
-This code will load the data from the "data.csv" file into a Pandas DataFrame named `df`.
-\n--------------------------------------------------\n\nQuestion: 8.  Write the Pandas code to select rows from a DataFrame called `df` where the "status" column is equal to "active" AND the "age" column is greater than 25.\nAnswer: ```python
-df[(df["status"] == "active") & (df["age"] > 25)]
-```\n--------------------------------------------------\n\nQuestion: 9.  Write the Pandas code to calculate the minimum value of the "price" column in a DataFrame called `products`.\nAnswer: ```python
-products["price"].min()
-```\n--------------------------------------------------\n\nQuestion: 10. How do you convert a Pandas Series into a DataFrame, and why might you want to do this?\nAnswer: You can convert a Pandas Series into a DataFrame using the `series.to_frame()` method. This is useful because many functions return Series instead of DataFrames, and you might need a DataFrame for further processing or compatibility with other functions that expect DataFrames as input.
-\n--------------------------------------------------\n\nQuestion: 11. Write the Pandas code to calculate the minimum of "salary" and maximum of "age" columns at once in a DataFrame called `employees`.\nAnswer: ```python
-employees.agg( { “salary” : “min” , “age” : “max”} )
-```\n--------------------------------------------------\n\nQuestion: 12. Write the Pandas code to get the 5 largest rows based on the "sales" column in a DataFrame called `transactions`.\nAnswer: ```python
-transactions.nlargest(5, ["sales"])
-```\n--------------------------------------------------\n\nQuestion: 13. Explain the difference between `concat` and `join` operations for combining Pandas DataFrames. Give a scenario where you would use each.\nAnswer: `concat` and `join` are both used to combine Pandas DataFrames, but they do so in different ways and are suited for different scenarios.
-
-*   **concat**: Combines DataFrames by stacking them along an axis (either rows or columns). It essentially appends one DataFrame to another.
-
-    *   **Scenario**: You have two DataFrames with the same columns but different rows (e.g., data from different months) and you want to combine them into a single DataFrame.
-*   **join**: Combines DataFrames based on a key column or index, similar to SQL joins. It aligns rows based on the specified key and merges columns from the two DataFrames.
-
-    *   **Scenario**: You have two DataFrames with different information about the same entities (e.g., customer information in one DataFrame and order information in another) and you want to combine them based on a common customer ID.\n--------------------------------------------------\n\nQuestion: 14. Describe the different types of joins (left, right, inner, outer) and the implications of each.\nAnswer: Here's a breakdown of the different types of joins and their implications, according to the provided text:
-
-*   **Left Join:** Joins every row of the first table with all possible values of the second table. If no matching value exists in the second table, the value will be NaN (Not a Number, representing a missing value).
-
-*   **Right Join:** Joins every row of the second table with all possible values of the first table. If no matching value exists in the first table, the value will be NaN.
-
-*   **Inner Join:** Joins every row of the first table with all possible values of the second table. If no matching value exists in the second table, the row will not appear in the result.
-
-*   **Outer Join:** Joins every row of one table with all possible values of the other. If no matching value exists in the other table, the value in that particular cell will be NaN.\n--------------------------------------------------\n\nQuestion: 15. Write the Pandas code to perform a left join between two DataFrames, `df1` and `df2`, using the "ID" column in `df1` and the index of `df2`.\nAnswer: ```python
-DataFrame_1.join( DataFrame_2, on = “header”, how = “left” )
-```
+Question 8: Describe how to select rows based on conditions in a Pandas DataFrame. How can you combine multiple conditions?
+Answer: To select rows based on conditions in a Pandas DataFrame, you can use the following syntax:
 
 ```python
-import pandas as pd
-
-# Assuming df1 and df2 are already defined DataFrames
-
-# Left join df1 and df2 using 'ID' column of df1 and index of df2
-result_df = df1.join(df2, on="ID", how="left")
-```\n--------------------------------------------------\n\nQuestion: 16. What is a time-series? Explain the difference between univariate and multivariate time-series.\nAnswer: A time-series is a series of values that have a timestamp.
-
-*   **Univariate:** The time-series has a single feature (e.g., price in a stock index, mortality, birth rate).
-*   **Multivariate:** The time-series has multiple features (e.g., Weather, composed of temperature, pressure, humidity, etc.).\n--------------------------------------------------\n\nQuestion: 17. Explain the purpose of moving averages in time-series analysis.\nAnswer: Moving averages are useful in time-series analysis because they lead to a decrease in noise. In a time series, values are often noisy because observations vary abruptly from point to point, often due to an imprecise observation process. Moving averages can help smooth out these fluctuations.
-\n--------------------------------------------------\n\nQuestion: 18. Explain the difference between Simple Moving Average and Weighted Moving Average.\nAnswer: A Simple Moving Average (SMA) calculates the average of K values in a time series, giving equal weight to each value within the window.
-
-A Weighted Moving Average (WMA) assigns different weights to each value within the window of K values, with the contribution of each element being determined by its assigned weight. The formula for WMA is:
-WMA(t) = ∑ (w_i * v_{t-K+i}) / ∑ w_{i}
-where v is the value and w is the weight.
-\n--------------------------------------------------\n\nQuestion: 19. Write the Pandas code to calculate a simple moving average with a window of size 5 on a column named "value" in a DataFrame called `data`.\nAnswer: ```python
-data["simpleMA"] = data["value"].rolling(5, center = False).mean()
+df[df["header"] == "condition"]
 ```
 
-This code calculates the simple moving average of the 'value' column in the DataFrame `data` using a rolling window of size 5. The `center = False` argument specifies that the moving average should not be centered.\n--------------------------------------------------\n\nQuestion: 20. What is correlation? Explain the difference between positive and negative correlation. Does correlation imply causation?\nAnswer: Correlation is a statistical relationship between two random variables. It measures the degree to which a pair of variables are linearly related.
+This will return a new DataFrame containing only the rows where the value in the column "header" is equal to "condition".
 
-*   **Positive Correlation:** The two variables move in tandem, meaning they change in the same direction. When one variable increases, the other also increases, and vice versa.
-*   **Negative Correlation:** The two variables move in opposite directions. When one variable increases, the other decreases, and vice versa.
-
-**Important Note:** Correlation does not necessarily mean causation. Just because two variables are correlated does not mean that one causes the other. There might be other factors influencing the relationship, or it could be purely coincidental.\n--------------------------------------------------\n\nQuestion: 21. What is "shifted correlation" and why might it be useful?\nAnswer: Shifted correlation is a method used when the correlation between two variables is not immediate, but occurs over time. For example, a person may only die from COVID several days after symptoms appear.
-
-It might be useful to shift the cases some days to align them with the deaths to find a better correlation. This involves using `.iloc` to select all but the last *n* rows for one variable and all but the first *n* rows for the other variable, then computing the correlation.
-\n--------------------------------------------------\n\nQuestion: 22. Explain the MapReduce framework. What are the key steps, and what is the programmer responsible for?\nAnswer: The MapReduce framework is a parallel and distributed processing model designed for processing large datasets. Here's a breakdown of its key aspects:
-
-**Key Steps:**
-
-1.  **Sequentially read a lot of data:** The framework begins by reading the input data sequentially.
-2.  **Map Phase:**
-    *   Extract the important information from each input record.
-    *   The goal is to transform the input data into key-value pairs.
-3.  **Group by Key (Shuffle and Sort):**
-    *   The output of the map phase is sorted and shuffled.
-    *   Key-value pairs with the same key are grouped together.
-4.  **Reduce Phase:**
-    *   Aggregate, summarize, filter, or transform the data for each key.
-    *   This phase processes the grouped data to produce the final output.
-5.  **Write the Result:** The results from the reduce phase are written to the output.
-
-**Programmer Responsibilities:**
-
-*   The programmer is primarily responsible for defining two functions:
-    *   **Map Function:** This function takes an input record and transforms it into one or more key-value pairs.
-    *   **Reduce Function:** This function takes a key and its associated values (from the map phase) and aggregates, summarizes, filters, or transforms them to produce the final output for that key.
-
-**System Responsibilities:**
-
-*   The MapReduce system handles the rest of the process, including:
-    *   **Distributed Execution:** Distributing the map and reduce tasks across multiple machines.
-    *   **Partitioning:** Dividing the input data into smaller chunks for parallel processing.
-    *   **Fault Tolerance:** Handling machine failures and ensuring the job completes successfully.
-    *   **Data Transfer:** Transferring data between the map and reduce phases.
-    *   **Parallelism:** Executing both Map and Reduce tasks in parallel for efficiency and reduced runtime.
-\n--------------------------------------------------\n\nQuestion: 23. What are the advantages and disadvantages of MapReduce?\nAnswer: Here are the advantages and disadvantages of MapReduce, according to the provided text:
-
-**Advantages:**
-
-*   **Parallel Execution:** Both Map and Reduce tasks can be executed in parallel, which improves efficiency and reduces runtime.
-*   **Simplified Programming:** Programmers only need to specify the map and reduce functions. The system handles distributed execution and fault tolerance.
-
-**Disadvantages:**
-
-*   **File I/O Overhead:** It requires reading and writing files, potentially on multiple machines.
-*   **File System Replication:** The underlying file system needs replication for writers.
-*   **Job Dependency:** One job must finish before the next can start.\n--------------------------------------------------\n\nQuestion: 24. What is a lineage graph in Spark?\nAnswer: Spark programs encode the dependencies among various DataFrames in a lineage graph.
-\n--------------------------------------------------\n\nQuestion: 25. Explain the difference between wide and narrow dependencies in Spark. Which is more computationally expensive, and why?\nAnswer: Here's an explanation of wide vs. narrow dependencies in Spark, and why wide dependencies are more computationally expensive:
-
-**Narrow Dependencies:**
-
-*   A partition of a DataFrame depends on data that is co-located (on the same node).
-*   Examples: simple `select`, `where`, co-located `join`.
-
-**Wide Dependencies:**
-
-*   A DataFrame partition depends on multiple partitions stored on different nodes.
-*   Examples: `groupBy`, generic `join`, `select aggregate`.
-
-**Computational Cost:**
-
-Wide dependencies are significantly more computationally expensive than narrow dependencies. Here's why:
-
-*   **Shuffling:** Wide dependencies require shuffling data across the network. Shuffling involves redistributing data between nodes so that all the data needed to compute a partition is available on the same node. This data transfer is a major bottleneck.
-*   **Data Movement:** Narrow dependencies can be computed without shuffling because all the necessary data is already present on the same node. This minimizes data movement and network communication.
-*   **Fault Tolerance:** In case of a node failure, recomputing a partition with a wide dependency requires fetching data from multiple nodes again. With narrow dependencies, only the data on the failed node needs to be recomputed (and it might be available locally if replication is enabled).
-
-In summary, wide dependencies introduce significant overhead due to shuffling, making them more computationally expensive than narrow dependencies. Spark's execution engine tries to optimize execution by minimizing shuffles whenever possible.
-\n--------------------------------------------------\n\nQuestion: 26. Write the PySpark code to read a CSV file named "data.csv" into a Spark DataFrame, inferring the schema and treating the first row as a header.\nAnswer: ```python
-df = spark.read.option("header", True).option("inferSchema", True).csv("data.csv")
-```
-
-This code snippet will:
-
-1.  `spark.read`:  This initiates the Spark DataFrameReader, which is used to read data into a DataFrame.
-2.  `.option("header", True)`: This specifies that the first row of the CSV file should be used as the header row for the DataFrame.
-3.  `.option("inferSchema", True)`: This tells Spark to automatically infer the data types of the columns based on the data in the CSV file.
-4.  `.csv("data.csv")`: This specifies the path to the CSV file that you want to read.  Replace `"data.csv"` with the actual path to your file if it's not in the current directory.
-5.  `df = ...`:  The resulting Spark DataFrame is assigned to the variable `df`.
-\n--------------------------------------------------\n\nQuestion: 27. Write the PySpark code to rename a column named "old_name" to "new_name" in a Spark DataFrame called `df`.\nAnswer: ```python
-df = df.withColumnRenamed("old_name", "new_name")
-```
-
-This code snippet uses the `withColumnRenamed()` function in PySpark to rename the column "old_name" to "new_name" in the DataFrame `df`.
-\n--------------------------------------------------\n\nQuestion: 28. Explain how to convert between Spark DataFrames and Spark Pandas DataFrames. Why might you want to do this?\nAnswer: Here's how to convert between Spark DataFrames and Spark Pandas DataFrames, along with the reasons why you might want to do so:
-
-**Conversion Methods**
-
-*   **From Spark DataFrame to Spark Pandas DataFrame:**
-
-    ```python
-    pandas_sparkDF = sparkDF.pandas_api()
-    ```
-
-*   **From Spark Pandas DataFrame to Spark DataFrame:**
-
-    ```python
-    sparkDF = pandas_sparkDF.to_spark(index_col="column")
-    ```
-
-    *   `index_col`: Specifies which column from the Pandas DataFrame should be used as the index in the resulting Spark DataFrame.
-
-**Why Convert?**
-
-1.  **Leverage Pandas API:** Spark Pandas DataFrames allow you to use the familiar Pandas API for data manipulation within a Spark environment. This can be easier for users already familiar with Pandas.
-
-2.  **Spark Optimization:** Programs using the Pandas API are translated into Spark programs and optimized for efficient execution. Spark can then distribute and parallelize these operations across a cluster.
-
-\n--------------------------------------------------\n\nQuestion: 29. How do you register a Spark DataFrame as a SQL table? Why is this useful?\nAnswer: Here's how to register a Spark DataFrame as a SQL table and why it's useful:
-
-**How to Register a Spark DataFrame as a SQL Table**
+To combine multiple conditions, you can use the `&` (and) or `|` (or) operators:
 
 ```python
-dfS.createOrReplaceTempView("persons")
+df[(df["header_1"] == "condition_1") & (df["header_2"] > 10)]
 ```
 
-In this code:
+This will return a new DataFrame containing only the rows where the value in the column "header_1" is equal to "condition_1" **and** the value in the column "header_2" is greater than 10.
 
-1.  `dfS` is your Spark DataFrame.
-2.  `createOrReplaceTempView("persons")` registers the DataFrame as a temporary SQL view named "persons".  If a view with that name already exists, it will be replaced.
+```python
+df[(df["header_1"] == "condition_1") | (df["header_2"] > 10)]
+```
 
-**Why is this useful?**
+This will return a new DataFrame containing only the rows where the value in the column "header_1" is equal to "condition_1" **or** the value in the column "header_2" is greater than 10.
 
-*   **SQL Interface:** It allows you to query your Spark DataFrames using SQL, which can be more familiar and convenient for those with SQL experience.
-*   **Interoperability:**  You can combine Spark DataFrame operations with SQL queries, leveraging the strengths of both.
-*   **Data Abstraction:** It provides a way to give a name to a DataFrame, making your code more readable and maintainable.  You can then refer to the data using the table name in your SQL queries.
-\n--------------------------------------------------\n\n
+--------------------------------------------------
+
+Question 9: Explain the difference between a left join, right join, inner join, and outer join when combining DataFrames.
+Answer: Here's an explanation of the different types of joins used to combine DataFrames:
+
+*   **Left Join:** This join takes all rows from the "left" DataFrame and matches them with rows from the "right" DataFrame based on a specified key column. If there's a match, the corresponding columns from the right DataFrame are included in the result. If there's no match in the right DataFrame for a row in the left DataFrame, the columns from the right DataFrame will have `NaN` (Not a Number) values in the resulting DataFrame.
+
+*   **Right Join:** This is the opposite of a left join. It takes all rows from the "right" DataFrame and matches them with rows from the "left" DataFrame based on a specified key column. If there's a match, the corresponding columns from the left DataFrame are included in the result. If there's no match in the left DataFrame for a row in the right DataFrame, the columns from the left DataFrame will have `NaN` values in the resulting DataFrame.
+
+*   **Inner Join:** This join only includes rows where there is a match in *both* the left and right DataFrames based on the specified key column. Rows that don't have a matching key in the other DataFrame are excluded from the result.
+
+*   **Outer Join:** This join (also sometimes called a "full outer join") includes *all* rows from both the left and right DataFrames. If there's a match based on the key column, the corresponding columns from both DataFrames are included. If there's no match in one of the DataFrames, the columns from the other DataFrame will have `NaN` values for those rows.
+--------------------------------------------------
+
+Question 10: What is a time-series? Differentiate between univariate and multivariate time-series, providing an example of each.
+Answer: A time-series is a series of values that have a timestamp.
+
+*   **Univariate:** The time-series has a single feature. E.g.: price in a stock index, mortality, birth rate
+*   **Multivariate:** The time-series has multiple features. E.g.: Weather (composed of temperature, pressure, humidity, etc.)
+--------------------------------------------------
+
